@@ -1,8 +1,10 @@
 """Manage My Scorecards"""
 
+import csv
 import datetime
 from typing import List
 
+import pandas as pd
 import yaml
 
 
@@ -39,8 +41,10 @@ class Scorecard:
 
     def build_new(self):
         config = {}
+        csv_data = {}
         print("Type the reference name (no spaces) for this item")
-        config['item'] = input('-> ')
+        reference_name = input('-> ')
+        config['item'] = reference_name
         print("Type the goal, then hit enter")
         config['goal'] = input('-> ')
         print("Type the name of the book")
@@ -55,6 +59,18 @@ class Scorecard:
                 break
             config['authors'].append(val)
         self.write_config(**config)
+        print("Config file written")
+        print("Type the start date, in the format dd/mm/yyyy")
+        csv_data['date'] = datetime.datetime.strptime(
+            input('-> '), "%d/%m/%Y")
+        print("Type the end date")
+        csv_data['end_date'] = datetime.datetime.strptime(
+            input('-> '), "%d/%m/%Y")
+        print("Type the start page or chunk")
+        csv_data['page'] = int(input('-> '))
+        print("Type the end page or chunk")
+        csv_data['end_page'] = int(input('-> '))
+        self.write_csv(reference_name=reference_name, **csv_data)
 
     def write_config(self, item: str, book: str, goal: str, data: str, authors:  List[str]):
         content = self.config['items'][item] = {
@@ -64,10 +80,20 @@ class Scorecard:
             'authors': authors
         }
         write_config(self.config)
-        # print(yaml.dump(self.config))
 
-    def write_csv(self):
-        pass
+    def write_csv(self, reference_name: str, date: datetime, end_date: datetime, page: int, end_page: int):
+        df = pd.DataFrame(columns=['line', 'date', 'achieved', 'target'])
+        line = 1
+        pages = int(round((end_page - page)/(end_date-date).days))
+        while date < end_date:
+            df.loc[line] = [line, date.strftime("%d/%m/%Y"), 0, page]
+            line += 1
+            if page + pages < end_page:
+                page += pages
+            else:
+                page = end_page
+            date += datetime.timedelta(days=1)
+        df.to_csv(f"data/{reference_name}.csv", index=False, sep='|')
 
 
 def main():
