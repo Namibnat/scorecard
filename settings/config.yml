@@ -1,0 +1,9 @@
+items:
+  precalculus:
+    - book: Precalculs Mathematics for calculus
+    - authors: Stewart, Redlin, Whatson
+    - data: precalculus.csv
+  discrete-mathematics:
+    - book: Discrete Mathematics with Applications
+    - authors: Epp
+    - data: discrete-mathematics.csv
