@@ -1,9 +1,9 @@
 """Manage My Scorecards"""
 
-import yaml
 import datetime
-
 from typing import List
+
+import yaml
 
 
 def read_config():
