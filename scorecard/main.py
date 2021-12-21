@@ -95,16 +95,16 @@ class Scorecard:
     def write_csv(self, data: str, date: datetime, end_date: datetime, page: int, end_page: int):
         df = pd.DataFrame(columns=['line', 'date', 'achieved', 'target'])
         line = 1
-        # pages = (end_page - page)/(end_date-date).days
+        start_page = page
         while True:
             end = (date.year == end_date.year) and (date.month == end_date.month) and (date.day == end_date.day)
-            df.loc[line] = [line, date.strftime("%d/%m/%Y"), 0, page]
-            line += 1
             if end:
                 page = end_page
             else:
                 page += (end_page - page)/(end_date-date).days
             page = int(round(page, 0))
+            df.loc[line] = [line, date.strftime("%d/%m/%Y"), start_page, page]
+            line += 1
             date += datetime.timedelta(days=1)
             if end:
                 break
