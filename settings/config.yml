@@ -1,1 +1,9 @@
 spaced:
+  precalculus:
+    authors:
+    - Stewart
+    - Redlin
+    - Watson
+    book: Precalculus, Mathematics for Calculus
+    data: precalc.csv
+    goal: Complete my precalculus textbook review by my next birthday

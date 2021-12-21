@@ -77,6 +77,7 @@ class Scorecard:
         if csv_data['end_page'] <= csv_data['page']:
             raise ValueError("Error: end page must be greater than start page")
         self.write_csv(reference_name=reference_name, **csv_data)
+        print("Done!")
 
     def write_config(self, item: str, book: str, goal: str, data: str, authors:  List[str]):
         if self.config['spaced'] is None:
