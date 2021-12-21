@@ -52,7 +52,8 @@ class Scorecard:
         print("Type the name of the book")
         config['book'] = input('-> ')
         print("Type the name of the data file (no spaces)")
-        config['data'] = f"{input('-> ')}.csv"
+        data = f"{input('-> ')}.csv"
+        config['data'] = data
         if " " in config['data']:
             raise ValueError("Error: space in filename")
         print('Type the name of the authors, and q when done')
@@ -64,6 +65,7 @@ class Scorecard:
             config['authors'].append(val)
         self.write_config(**config)
         print("Config file written")
+        csv_data['data'] = data
         print("Type the start date, in the format dd/mm/yyyy")
         csv_data['date'] = datetime.datetime.strptime(
             input('-> '), "%d/%m/%Y")
@@ -76,7 +78,7 @@ class Scorecard:
         csv_data['end_page'] = int(input('-> '))
         if csv_data['end_page'] <= csv_data['page']:
             raise ValueError("Error: end page must be greater than start page")
-        self.write_csv(reference_name=reference_name, **csv_data)
+        self.write_csv(**csv_data)
         print("Done!")
 
     def write_config(self, item: str, book: str, goal: str, data: str, authors:  List[str]):
@@ -90,7 +92,7 @@ class Scorecard:
         }
         write_config(self.config)
 
-    def write_csv(self, reference_name: str, date: datetime, end_date: datetime, page: int, end_page: int):
+    def write_csv(self, data: str, date: datetime, end_date: datetime, page: int, end_page: int):
         df = pd.DataFrame(columns=['line', 'date', 'achieved', 'target'])
         line = 1
         # pages = (end_page - page)/(end_date-date).days
@@ -106,7 +108,7 @@ class Scorecard:
             date += datetime.timedelta(days=1)
             if end:
                 break
-        df.to_csv(f"data/{reference_name}.csv", index=False, sep='|')
+        df.to_csv(f"data/{data}", index=False, sep='|')
 
 
 def main():
