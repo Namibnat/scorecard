@@ -93,7 +93,7 @@ class Scorecard:
         write_config(self.config)
 
     def write_csv(self, data: str, date: datetime, end_date: datetime, page: int, end_page: int):
-        df = pd.DataFrame(columns=['line', 'date', 'achieved', 'target'])
+        df = pd.DataFrame(columns=['date', 'achieved', 'target'])
         line = 1
         start_page = page
         while True:
@@ -103,7 +103,7 @@ class Scorecard:
             else:
                 page += (end_page - page)/(end_date-date).days
             page = int(round(page, 0))
-            df.loc[line] = [line, date.strftime("%d/%m/%Y"), start_page, page]
+            df.loc[line] = [date.strftime("%d/%m/%Y"), start_page, page]
             line += 1
             date += datetime.timedelta(days=1)
             if end:
