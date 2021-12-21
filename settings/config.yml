@@ -1,17 +1,1 @@
-items:
-  discrete-mathematics:
-    authors: Epp
-    book: Discrete Mathematics with Applications
-    data: discrete-mathematics.csv
-    goal: Complete the book by 5 July 2022
-  precalculus:
-    authors: Stewart, Redlin, Whatson
-    book: Precalculs Mathematics for calculus
-    data: precalculus.csv
-    goal: Complete the book by 5 July 2022
-  tx:
-    authors:
-    - me
-    book: tx
-    data: tx.csv
-    goal: tw
+spaced:
